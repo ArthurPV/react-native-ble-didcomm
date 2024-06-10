@@ -8,6 +8,11 @@
     "start": "react-native start"
   },
   "dependencies": {
+    "@animo-id/react-native-ble-didcomm": "^0.8.0",
+    "@credo-ts/core": "^0.5.3",
+    "@credo-ts/react-native": "^0.5.3",
+    "@credo-ts/transport-ble": "^0.3.0",
+    "@stablelib/sha256": "^1.0.1",
     "babel-plugin-module-resolver": "4.1.0",
     "react": "18.1.0",
     "react-native": "0.70.3"
