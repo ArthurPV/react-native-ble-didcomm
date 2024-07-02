@@ -68,6 +68,16 @@ export class Central implements Ble {
     }
   }
 
+  public async fastConnect(peripheralId: string) {
+	  try {
+		  await sdk.fastConnect(peripheralId)
+	  } catch (e) {
+		throw new Error(
+			`An error occurred while trying to connect to '${peripheralId}': ${e}`
+		)
+	  }
+  }
+
   public registerOnDiscoveredListener(
     cb: ({ identifier, name }: { identifier: string; name?: string }) => void
   ) {

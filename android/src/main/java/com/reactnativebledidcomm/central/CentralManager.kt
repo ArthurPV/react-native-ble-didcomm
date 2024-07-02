@@ -111,6 +111,17 @@ class CentralManager(private val context: ReactContext) {
     }
 
     @RequiresPermission(allOf = ["android.permission.BLUETOOTH_CONNECT", "android.permission.BLUETOOTH_SCAN"])
+	fun fastConnect(peripheralId: String) {
+		val device = bluetoothAdapter.getRemoteLeDevice(peripheralId, BluetoothDevice.ADDRESS_TYPE_PUBLIC)
+
+		if (connectedGatt?.device?.address != peripheralId) {
+			connectedGatt = device.connectGatt(context, false, gattClientCallback)
+		}
+
+		stopScan()
+	}
+
+    @RequiresPermission(allOf = ["android.permission.BLUETOOTH_CONNECT", "android.permission.BLUETOOTH_SCAN"])
     fun connect(peripheralId: String) {
         val device = discoveredPeripherals.find { it.address == peripheralId }
             ?: throw CentralManagerException.PeripheralNotFound()

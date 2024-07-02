@@ -49,6 +49,14 @@ export class Peripheral implements Ble {
     }
   }
 
+  public async getPeripheralAddress(): Promise<string> {
+	  try {
+		  return await sdk.getPeripheralAddress()
+	  } catch (e) {
+		  throw new Error('An error occured while while trying to get bluetooth address')
+	  }
+  }
+
   public registerMessageListener(cb: (data: { message: string }) => void) {
     const onReceivedNotificationListener = this.bleDidcommEmitter.addListener(
       'onReceivedWriteWithoutResponse',

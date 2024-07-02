@@ -160,6 +160,29 @@ class BleDidcommModule(private val context: ReactApplicationContext) :
         }
     }
 
+	@ReactMethod
+    @RequiresPermission(allOf = ["android.permission.BLUETOOTH_CONNECT"])
+	fun getPeripheralAddress(promise: Promise) {
+		try {
+			val peripheralManager = this.peripheralManager ?: throw PeripheralManagerException.NotStarted()
+			promise.resolve(peripheralManager.getBluetoothAddress())
+		} catch (e: Exception) {
+			promise.reject("error", e)
+		}
+	}
+
+	@ReactMethod
+    @RequiresPermission(allOf = ["android.permission.BLUETOOTH_CONNECT", "android.permission.BLUETOOTH_SCAN"])
+	fun fastConnect(peripheralId: String, promise: Promise) {
+		try {
+			val centralManager = this.centralManager ?: throw CentralManagerException.NotStarted()
+			centralManager.fastConnect(peripheralId)
+			promise.resolve(null)
+		} catch (e: Exception) {
+			promise.reject("error", e)
+		}
+	}
+
     @ReactMethod
     @RequiresPermission(allOf = ["android.permission.BLUETOOTH_CONNECT", "android.permission.BLUETOOTH_SCAN"])
     fun connect(peripheralId: String, promise: Promise) {
