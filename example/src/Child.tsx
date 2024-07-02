@@ -19,10 +19,18 @@ export default function Child() {
   const [isCentral, setIsCentral] = React.useState<boolean>(false)
   const [isPeripheral, setIsPeripheral] = React.useState<boolean>(false)
 
-  const asCentral = () => setIsCentral(true)
-  const asPeripheral = () => setIsPeripheral(true)
+  const asCentral = () => {
+	  setIsCentral(true)
+	  setIsPeripheral(false)
+  }
+  const asPeripheral = () => {
+	  setIsPeripheral(true)
+	  setIsCentral(false)
+  }
 
   useEffect(() => {
+	  console.log('Start central or peripheral')
+	  
 	  const start = async () => {
 		  if (isCentral) {
 			  await central.start()
@@ -35,6 +43,8 @@ export default function Child() {
   }, [isCentral, isPeripheral])
 
   useEffect(() => {
+	console.log('Start NFC & Bluetooth connection')
+
 	const requestPermissions = async () => {
 	  await PermissionsAndroid.requestMultiple([
 		'android.permission.ACCESS_FINE_LOCATION',
@@ -111,6 +121,8 @@ export default function Child() {
   if (hasNfc) {
 	  return (
 		<View style={styles.container}> 
+			<Button title="Use central" onPress={asCentral} />
+			<Button title="Use peripheral" onPress={asPeripheral} />
 		</View>
 	  )
   }
@@ -131,4 +143,4 @@ const styles = StyleSheet.create({
     height: 60,
     marginVertical: 20
   }
-}
+})
