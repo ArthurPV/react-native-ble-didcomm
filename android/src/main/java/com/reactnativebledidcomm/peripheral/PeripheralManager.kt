@@ -342,6 +342,7 @@ class PeripheralManager(private val context: ReactContext) {
 	fun getBluetoothAddress(): String = bluetoothAdapter.address
 
     @SuppressLint("MissingPermission")
+	@RequiresPermission(allOf = ["android.permission.BLUETOOTH_CONNECT"])
     private var gattServer: BluetoothGattServer =
         bluetoothManager.openGattServer(
             context,
